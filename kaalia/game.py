@@ -3,9 +3,7 @@ import ctypes
 import sdl2
 from OpenGL import GL as gl
 
-from kaalia import (
-    __title__ as TITLE,
-    __version__ as VERISON)
+from kaalia_etc import config
 
 
 def sdl2_die(msg):
@@ -17,9 +15,9 @@ def sdl2_die(msg):
 class kaaliaMain(object):
     def __init__(self):
         self.quit = False
-        self.screen_width = 1280
-        self.screen_height = 1024
-        self.title = f"{TITLE} Ver:{VERISON}".encode('utf8')
+        self.screen_width = config.ENGINE_CONFIG['screen_width']
+        self.screen_height = config.ENGINE_CONFIG['screen_height']
+        self.title = f"{config.ENGINE_CONFIG['title']}".encode('utf8')
 
     def onInit(self):
         if sdl2.SDL_Init(sdl2.SDL_INIT_VIDEO) < 0:
@@ -62,7 +60,7 @@ class kaaliaMain(object):
 
     def GameMainandLoop(self):
         while not self.quit:
-            gl.glClearColor(0, 0, 0, 1.0)
+            gl.glClearColor(0.2, 0.2, 0.2, 1.0)
             while sdl2.SDL_PollEvent(ctypes.byref(self.event)) != 0:
                 self.onEvent(self.event)
             gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
